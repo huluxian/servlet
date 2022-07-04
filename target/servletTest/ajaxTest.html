@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajaxjson</title>
+    <link type="text/css" href="css/my.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id ="container"></div>
+
+
+<div class="container">
+    <botton id="btn1" class="btn btn-primary"  >
+        点击有惊喜
+    </botton>
+</div>
+<script type="text/javascript">
+    var btn=document.getElementById("btn1");
+    $("#btn1").innerText="你是谁？";
+    btn.onclick=function(){
+        $("#btn1").innerText="你是谁？";
+        btn.innerText="!!1";
+        alert("!!!!!!!");
+        $.ajax({//利用jQuery对ajax的支持
+            "url" : "http://localhost:8080/servlet/userJson",
+            "type" : "get",
+            //"data" : {"t":"pypl"},//多个参数用逗号隔开即可
+            "dataType" : "json",
+            "success" : function(json){
+                for(var i = 0; i < json.length; i ++) {
+                    $("#container").append("<h1>" + json[i].username + "</h1>");
+                    $("#container").append("<h1>" + json[i].id + "</h1>");
+                }
+            },
+            "error" : function(xmlhttp, errorText){
+                if(xmlhttp.status == "405"){
+                    alert("无效的请求方式");
+                }else if(xmlhttp.status == "404"){
+                    alert("URL资源不存在");
+                }else if(xmlhttp.status == "500"){
+                    alert("服务器内部产生异常，请联系管理员");
+                }else{
+                    alert("产生异常，请联系管理员!");
+                }
+            }
+        })
+    }
+    /* $(function(){
+         $.ajax({//利用jQuery对ajax的支持
+             "url" : "http://localhost:8080/servlet/userJson",
+             "type" : "get",
+             //"data" : {"t":"pypl"},//多个参数用逗号隔开即可
+             "dataType" : "json",
+             "success" : function(json){
+                 for(var i = 0; i < json.length; i ++) {
+                     $("#container").append("<h1>" + json[i].username + "</h1>");
+                     $("#container").append("<h1>" + json[i].id + "</h1>");
+                 }
+             },
+             "error" : function(xmlhttp, errorText){
+                 if(xmlhttp.status == "405"){
+                     alert("无效的请求方式");
+                 }else if(xmlhttp.status == "404"){
+                     alert("URL资源不存在");
+                 }else if(xmlhttp.status == "500"){
+                     alert("服务器内部产生异常，请联系管理员");
+                 }else{
+                     alert("产生异常，请联系管理员!");
+                 }
+             }
+         })
+     }*/
+   /* function cli(){
+        console.log("!!!!");
+        alert("???");
+           $.ajax({
+               "url" : "http://localhost:8080/servlet/userJson",
+               "type" : "get",
+               //"data" : {"t":"pypl"},//多个参数用逗号隔开即可
+               "dataType" : "json",
+               "success" : function(json){
+                   for(var i = 0; i < json.length; i ++) {
+                       console.log("你成功了！")
+                       $("#container").append("<h1>" + json[i].username + "</h1>");
+                       $("#container").append("<h1>" + json[i].id + "</h1>");
+                   }
+               },
+               "error":function () {
+                   alert("你失败了！")
+               }
+
+
+           })
+
+
+    }*/
+     /*$("#btn1").onclick=function (){
+         console.log("!!!!!!!!!")
+         $.ajax({
+             "url" : "http://localhost:8080/servlet/userJson",
+             "type" : "get",
+             //"data" : {"t":"pypl"},//多个参数用逗号隔开即可
+             "dataType" : "json",
+             "success" : function(json){
+                 for(var i = 0; i < json.length; i ++) {
+                     console.log("你成功了！")
+                     $("#container").append("<h1>" + json[i].username + "</h1>");
+                     $("#container").append("<h1>" + json[i].id + "</h1>");
+                 }
+             },
+             "error":function () {
+                 alert("你失败了！")
+             }
+
+
+         })
+     }*/
+</script>
+
+</body>
+</html>

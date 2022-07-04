@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajaxjson</title>
+    <link type="text/css" href="css/my.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="container">
+    <script>
+        console.log("json测试！")
+        //1-创建对象
+        var xmlhttp;
+        if(window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }else{
+            xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+        }
+        //2-发送ajax请求
+        xmlhttp.open("GET", "http://localhost:8080/servlet/userJson", true);
+        xmlhttp.send();
+        console.log(xmlhttp.readyState);
+        //3-处理响应
+        xmlhttp.onreadystatechange = function(){
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var text = xmlhttp.responseText;
+                console.log(text);
+                var json = JSON.parse(text);//把响应体的文本转换为JSON格式
+                var html="";
+                //动态处理每一条JSON
+                for(var i = 0; i < json.length; i ++) {
+                    var user = json[i];
+                    html = html + "<h1>" +"姓名"+ user.username+ user.id + "&nbsp" + user.number+ "</h1>";
+                    //html = html + "<h2>" + user.id + "&nbsp" + user.number + "</h2>";
+                    html = html + "<hr/>";
+                }
+                //为id为container的容器添加新创建的html页面
+                document.getElementById("container").innerHTML=html;
+            }
+        }
+
+
+    </script>
+</div>
+
+</body>
+</html>

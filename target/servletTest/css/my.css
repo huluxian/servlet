@@ -1,0 +1,17 @@
+.boarder{
+    border: solid 5px cornflowerblue;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    width: 600px;
+
+
+}
+
+
+.left{
+
+    margin-left:300px;
+
+
+}
